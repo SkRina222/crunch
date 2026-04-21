@@ -1,6 +1,9 @@
 from django.db import models
 
+<<<<<<< HEAD
 # lab 5: крок 1 - додано модель Service для послуг та пов'язано Appointment -> Service
+=======
+>>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a
 class Doctor(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
     name = models.CharField(max_length=255, verbose_name="Ім'я")
@@ -16,7 +19,7 @@ class Doctor(models.Model):
         verbose_name_plural = "Лікарі"
         ordering = ['name']
 
-    
+            
     def __str__(self):
         return self.name
     
@@ -38,6 +41,7 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
+
 class Service(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
     name = models.CharField(max_length=255, verbose_name="Назва")
@@ -55,11 +59,16 @@ class Service(models.Model):
     def __str__(self):
         return self.name
 
+=======
+>>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a
 class Appointment(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='appointments', verbose_name="Пацієнт")
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='appointments', verbose_name="Лікар")
+<<<<<<< HEAD
     service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='appointments', verbose_name="Послуга", default=1)
+=======
+>>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a
     appointment_date = models.DateField(verbose_name="Дата запису")
     appointment_time = models.TimeField(verbose_name="Час запису")
     description = models.TextField(blank=True, null=True, verbose_name="Опис")
@@ -77,4 +86,8 @@ class Appointment(models.Model):
         ordering = ['appointment_date', 'appointment_time']
 
     def __str__(self):
+<<<<<<< HEAD
         return f"{self.patient.name} - {self.doctor.name} - {self.service.name}"
+=======
+        return f"{self.patient.name} - {self.doctor.name}"
+>>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a
