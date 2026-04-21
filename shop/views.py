@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .models import Service
+
+# lab 5: крок 1 - додано модель Service; крок 2 - products view бере послуги з БД; крок 3 - шаблон products їх відображає
 
 def home(request):
     context = {
@@ -15,9 +18,10 @@ def about(request):
     return render(request, 'shop/about.html', context)
 
 def products(request):
+    services = Service.objects.all()
     context = {
-        'title': 'Our product',
-        'products': ['apple', 'cobblestone', 'Wood', 'Glass']
+        'title': 'Наші послуги',
+        'services': services
     }
     return render(request, 'shop/products.html', context)
 

@@ -1,19 +1,28 @@
-<!doctype html>
-<html lang="uk">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Продукти</title>
-  </head>
-  <body>
-    <h1>{{ title }}</h1>
-    <ul>
-      {% for product in products %}
-      <li>{{ product }}</li>
-      {% endfor %}
-    </ul>
+{% extends 'shop/base.html' %}
+{% load static %}
 
-    <nav>
-      <a href="{% url 'shop:home' %}">← Повернутися на головну</a>
-    </nav>
-  </body>
-</html>
+{# lab 5: крок 5 - сторінка послуг з моделі Service; відображення назви, опису, ціни, тривалості #}
+{% block title %}Послуги{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-5">{{ title }}</h1>
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <h3>{{ service.name }}</h3>
+                <p>{{ service.description }}</p>
+                <p><strong>Ціна:</strong> {{ service.price }} грн</p>
+                <p><strong>Тривалість:</strong> {{ service.duration }} хв</p>
+                <a href="{% url 'shop:contact' %}" class="btn btn-primary">Записатися</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">Послуги ще не додані.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
