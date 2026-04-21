@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Service
 
 # lab 5: крок 1 - додано модель Service; крок 2 - products view бере послуги з БД; крок 3 - шаблон products їх відображає
+# lab 6: крок 1 - додано view service_detail для детальної сторінки послуги
 
 def home(request):
     context = {
@@ -24,6 +25,14 @@ def products(request):
         'services': services
     }
     return render(request, 'shop/products.html', context)
+
+def service_detail(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    context = {
+        'title': service.name,
+        'service': service
+    }
+    return render(request, 'shop/service_detail.html', context)
 
 def contact(request):
     context = {

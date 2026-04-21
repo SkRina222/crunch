@@ -1,10 +1,7 @@
 from django.contrib import admin
-<<<<<<< HEAD
 from .models import Doctor, Patient, Service, Appointment
 # lab 5: крок 2 - зареєстровано моделі в адмінці: Doctor, Patient, Service, Appointment
-=======
-from .models import Doctor, Patient, Appointment
->>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a
+# lab 6: крок 1 - додано поле image до ServiceAdmin для відображення в списку
 # Register your models here.
 
 @admin.register(Doctor)
@@ -19,10 +16,9 @@ class PatientAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'phone')
     list_filter = ('date_of_birth', 'created_at', 'updated_at')
 
-<<<<<<< HEAD
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'price', 'duration', 'created_at', 'updated_at')
+    list_display = ('id', 'name', 'description', 'price', 'duration', 'image', 'created_at', 'updated_at')
     search_fields = ('name', 'description')
     list_filter = ('price', 'duration', 'created_at', 'updated_at')
 
@@ -31,10 +27,3 @@ class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('id', 'patient', 'doctor', 'service', 'appointment_date', 'appointment_time', 'status', 'created_at', 'updated_at')
     search_fields = ('patient__name', 'doctor__name', 'service__name', 'description')
     list_filter = ('status', 'appointment_date', 'doctor', 'service', 'created_at', 'updated_at')
-=======
-@admin.register(Appointment)
-class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'patient', 'doctor', 'appointment_date', 'appointment_time', 'status', 'created_at', 'updated_at')
-    search_fields = ('patient__name', 'doctor__name', 'description')
-    list_filter = ('status', 'appointment_date', 'doctor', 'created_at', 'updated_at')
->>>>>>> 67b9306e19dd59a2420b989b829b2d252a67a97a

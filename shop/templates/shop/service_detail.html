@@ -1,0 +1,29 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{# lab 6: крок 1 - створено шаблон service_detail для детальної сторінки послуги з зображенням, описом, ціною, тривалістю та неактивною кнопкою "Записатися" #}
+{% block title %}{{ service.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if service.image %}
+            <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid">
+            {% else %}
+            <img src="{% static 'shop/images/no-image.png' %}" alt="No image" class="img-fluid">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ service.name }}</h1>
+            <p>{{ service.description }}</p>
+            <p><strong>Ціна:</strong> {{ service.price }} грн</p>
+            <p><strong>Тривалість:</strong> {{ service.duration }} хв</p>
+            <button class="btn btn-primary" disabled>Записатися</button>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a href="{% url 'shop:products' %}" class="btn btn-outline-primary">Повернутися до послуг</a>
+    </div>
+</div>
+{% endblock %}

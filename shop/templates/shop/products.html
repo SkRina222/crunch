@@ -2,6 +2,7 @@
 {% load static %}
 
 {# lab 5: крок 5 - сторінка послуг з моделі Service; відображення назви, опису, ціни, тривалості #}
+{# lab 6: крок 1 - додано відображення зображень послуг та кнопку "Деталі" для переходу на service_detail; видалено кнопку "Записатися" #}
 {% block title %}Послуги{% endblock %}
 
 {% block content %}
@@ -11,11 +12,14 @@
         {% for service in services %}
         <div class="col-md-4 mb-4">
             <div class="service-card">
+                {% if service.image %}
+                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-fluid mb-3">
+                {% endif %}
                 <h3>{{ service.name }}</h3>
                 <p>{{ service.description }}</p>
                 <p><strong>Ціна:</strong> {{ service.price }} грн</p>
                 <p><strong>Тривалість:</strong> {{ service.duration }} хв</p>
-                <a href="{% url 'shop:contact' %}" class="btn btn-primary">Записатися</a>
+                <a href="{% url 'shop:service_detail' service.id %}" class="btn btn-secondary me-2">Деталі</a>
             </div>
         </div>
         {% empty %}
