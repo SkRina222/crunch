@@ -1,7 +1,7 @@
 from django.db import models
 
 # lab 5: крок 1 - додано модель Service для послуг та пов'язано Appointment -> Service
-# lab 6: крок 1 - додано поле image до моделі Service для фотографій послуг
+# lab 6: крок 1 - додано поле image до моделі Service для фотографій послуг; крок 9 - додано поля rating (DecimalField для рейтингу лікаря від 0.0 до 5.0) та procedures (ManyToManyField до Service для процедур, які проводить лікар) до моделі Doctor
 class Doctor(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
     name = models.CharField(max_length=255, verbose_name="Ім'я")
@@ -9,6 +9,9 @@ class Doctor(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Опис")
     phone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Телефон")
     email = models.EmailField(blank=True, null=True, verbose_name="Email")
+    photo = models.ImageField(blank=True, null=True, upload_to='doctors/', verbose_name='Фото')
+    # lab 6: крок 9 - додано поле procedures як ManyToManyField до Service для зв'язку лікарів з процедурами
+    procedures = models.ManyToManyField('Service', blank=True, related_name='doctors', verbose_name="Процедури")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата створення")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата оновлення")
     

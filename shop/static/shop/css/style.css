@@ -102,6 +102,27 @@
   margin-bottom: 12px;
 }
 
+.service-card .doctor-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.service-card .doctor-photo-placeholder {
+  width: 100%;
+  height: 200px;
+  background: #e9ecef;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
 .service-card h3 {
   color: #007bff;
   margin-bottom: 10px;
@@ -153,6 +174,117 @@
   align-self: flex-start;
   display: inline-block;
   padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+/* lab 6: крок 2 - додано стилі для карток лікарів (doctor-card), аналогічно service-card */
+.doctor-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: auto;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+}
+
+.doctor-card h3 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+}
+
+.doctor-card .specialization {
+  color: #28a745;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.doctor-card .rating {
+  color: #ffc107;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.doctor-card .doctor-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.doctor-card .doctor-photo-placeholder {
+  width: 100%;
+  height: 200px;
+  background: #e9ecef;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.filter-box {
+  margin-bottom: 30px;
+}
+
+.doctor-card .description {
+  color: #666;
+  line-height: 1.4;
+  flex-grow: 1;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+.doctor-card .info {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 10px 0;
+  word-wrap: break-word;
+  padding: 10px;
+  background: #f8f9fa;
+  border-left: 3px solid #007bff;
+  border-radius: 4px;
+}
+
+.doctor-card .info p {
+  margin: 4px 0;
+  color: #333;
+  font-size: 0.85rem;
+}
+
+.doctor-card .info p:last-child {
+  margin-bottom: 0;
+}
+
+.doctor-card .info strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.doctor-card ul {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.doctor-card li {
+  color: #666;
   font-size: 0.9rem;
 }
 
@@ -243,4 +375,365 @@ body {
 
 .content {
   flex: 1;
+}
+
+/* ============================================================
+   NAVBAR UPGRADE — refined top bar
+   ============================================================ */
+.navbar {
+  background: #fff !important;
+  border-bottom: 1px solid rgba(0,123,255,.10);
+  padding: 0.85rem 0;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.navbar-brand {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: 1.25rem !important;
+  color: #0d6efd !important;
+  letter-spacing: -0.02em;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #444 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
+  transition: background .18s, color .18s;
+  letter-spacing: 0.01em;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(13,110,253,.08);
+  color: #0d6efd !important;
+}
+
+/* ============================================================
+   SERVICES HERO
+   ============================================================ */
+.services-hero {
+  position: relative;
+  background: linear-gradient(135deg, #0f4c99 0%, #1a73e8 55%, #3498db 100%);
+  padding: 90px 0 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.services-hero-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.services-hero-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.services-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.services-hero-subtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.85);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* Decorative circles */
+.services-hero-decor { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.decor-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  background: #fff;
+}
+.decor-1 { width: 360px; height: 360px; top: -100px; right: -80px; }
+.decor-2 { width: 200px; height: 200px; bottom: -60px; left: 5%; }
+.decor-3 { width: 120px; height: 120px; top: 30px; left: 15%; opacity: 0.07; }
+
+/* ============================================================
+   SERVICES GRID SECTION
+   ============================================================ */
+.services-grid-section {
+  padding: 70px 0 60px;
+  background: #f7f9fc;
+}
+
+/* ============================================================
+   SERVICE CARD  — fixed-height, no-overflow design
+   ============================================================ */
+.svc-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  display: flex;
+  flex-direction: column;
+  height: 100%;          /* stretch to fill column */
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+  border: 1px solid rgba(0,0,0,.05);
+}
+
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(13,110,253,.13);
+}
+
+/* --- image area: fixed height 200px, never stretches --- */
+.svc-card__image-wrap {
+  position: relative;
+  height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #e8edf5;
+}
+
+.svc-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .35s ease;
+}
+
+.svc-card:hover .svc-card__image {
+  transform: scale(1.04);
+}
+
+.svc-card__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #a0aec0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+}
+
+/* Price badge sits over the image */
+.svc-card__price-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: #0d6efd;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 50px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px rgba(13,110,253,.35);
+}
+
+/* --- body area: grows to fill space --- */
+.svc-card__body {
+  padding: 20px 20px 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.svc-card__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a2844;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  /* enforce single line with ellipsis if title is very long */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.svc-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.svc-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.svc-card__meta-item svg {
+  color: #0d6efd;
+  flex-shrink: 0;
+}
+
+/* Description — FIXED 3 lines, never overflows */
+.svc-card__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #5a6475;
+  margin: 0;
+  flex-grow: 1;
+
+  /* clamp to exactly 3 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  /* fallback for non-webkit */
+  max-height: calc(1.6em * 3);
+}
+
+/* --- actions: always at bottom --- */
+.svc-card__actions {
+  display: flex;
+  gap: 10px;
+  padding: 18px 20px 20px;
+  flex-shrink: 0;
+}
+
+.svc-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .2s ease;
+  white-space: nowrap;
+  flex: 1;
+  justify-content: center;
+  letter-spacing: 0.01em;
+}
+
+.svc-card__btn--outline {
+  border: 1.5px solid #0d6efd;
+  color: #0d6efd;
+  background: transparent;
+}
+
+.svc-card__btn--outline:hover {
+  background: rgba(13,110,253,.07);
+  color: #0d6efd;
+}
+
+.svc-card__btn--primary {
+  background: linear-gradient(135deg, #1a73e8 0%, #0d6efd 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 3px 10px rgba(13,110,253,.3);
+}
+
+.svc-card__btn--primary:hover {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  color: #fff;
+  box-shadow: 0 5px 16px rgba(13,110,253,.4);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   SERVICES EMPTY STATE
+   ============================================================ */
+.services-empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: #6b7280;
+  font-family: 'DM Sans', sans-serif;
+}
+.services-empty-icon { font-size: 4rem; margin-bottom: 20px; }
+.services-empty h3 { font-family: 'Playfair Display', serif; color: #1a2844; margin-bottom: 12px; }
+
+/* ============================================================
+   SERVICES CTA BANNER
+   ============================================================ */
+.services-cta-banner {
+  background: linear-gradient(135deg, #0f4c99 0%, #1a73e8 100%);
+  padding: 60px 0;
+}
+
+.services-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.services-cta-text h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.services-cta-text p {
+  font-family: 'DM Sans', sans-serif;
+  color: rgba(255,255,255,0.82);
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 300;
+}
+
+.services-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  color: #0d6efd;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all .22s ease;
+  box-shadow: 0 4px 18px rgba(0,0,0,.15);
+  letter-spacing: 0.01em;
+}
+
+.services-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.22);
+  color: #0a58ca;
+}
+
+@media (max-width: 768px) {
+  .services-cta-inner { flex-direction: column; text-align: center; }
+  .services-cta-text h2 { font-size: 1.4rem; }
 }

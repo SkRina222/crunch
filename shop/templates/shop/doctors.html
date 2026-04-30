@@ -1,0 +1,94 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Лікарі{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="text-center mb-5">{{ title }}</h1>
+  
+  <!-- Фільтр по послугах -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="filter-box p-3 bg-light rounded">
+        <form method="get" class="row align-items-end">
+          <div class="col-md-4">
+            <label for="serviceFilter" class="form-label">Фільтр по послугах:</label>
+            <select name="service" id="serviceFilter" class="form-select" onchange="this.form.submit()">
+              <option value="">Всі послуги</option>
+              {% for service in services %}
+              <option value="{{ service.id }}" {% if current_service == service.id|stringformat:"s" %}selected{% endif %}>
+                <span class="scrolling-text">{{ service.name|truncatechars:30 }}</span>
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-2">
+            <a href="{% url 'shop:doctors' %}" class="btn btn-secondary w-100">Очистити</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    {% for doctor in doctors %}
+    <div class="col-md-4 mb-4">
+      <div class="doctor-card">
+        {% if doctor.photo %}
+        <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor-photo img-fluid mb-3">
+        {% else %}
+        <div class="doctor-photo-placeholder mb-3">
+          <span>Немає фото</span>
+        </div>
+        {% endif %}
+        <h3>{{ doctor.name }}</h3>
+        <p class="specialization">{{ doctor.specialization }}</p>
+        {% if doctor.description %}
+        <p class="description">{{ doctor.description|truncatechars:200 }}</p>
+        {% endif %}
+        <div class="info">
+          {% if doctor.phone %}
+          <p><strong>Телефон:</strong> {{ doctor.phone }}</p>
+          {% endif %}
+          {% if doctor.email %}
+          <p><strong>Email:</strong> {{ doctor.email }}</p>
+          {% endif %}
+        </div>
+        <h5>Процедури:</h5>
+        <ul>
+          {% for procedure in doctor.procedures.all %}
+          <li>{{ procedure.name }}</li>
+          {% empty %}
+          <li>Процедури не вказані</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'shop:doctor_detail' doctor.id %}" class="btn btn-primary mt-2">Деталі</a>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+      <p class="text-center">Лікарі ще не додані.</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+<style>
+  .scrolling-text {
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    animation: scroll-text 10s linear infinite;
+  }
+
+  @keyframes scroll-text {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>

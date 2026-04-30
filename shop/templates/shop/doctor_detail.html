@@ -1,0 +1,80 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}{{ doctor.name }}{% endblock %}
+
+{% block content %}
+<div class="container service-detail-container">
+  <div class="row">
+    <div class="col-md-6">
+      {% if doctor.photo %}
+      <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="img-fluid service-image">
+      {% else %}
+      <div class="doctor-photo-placeholder" style="width: 100%; height: 400px; background: #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6c757d; font-size: 1.1rem;">
+        <span>Немає фото</span>
+      </div>
+      {% endif %}
+      <div class="mt-3">
+        <a href="{% url 'shop:doctors' %}" class="btn btn-outline-primary">Повернутися до лікарів</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h1>{{ doctor.name }}</h1>
+      <div class="service-detail-info">
+        <p><strong>Спеціалізація:</strong> {{ doctor.specialization }}</p>
+        {% if doctor.description %}
+        <p>{{ doctor.description }}</p>
+        {% endif %}
+        {% if doctor.phone %}
+        <p><strong>Телефон:</strong> {{ doctor.phone }}</p>
+        {% endif %}
+        {% if doctor.email %}
+        <p><strong>Email:</strong> {{ doctor.email }}</p>
+        {% endif %}
+      </div>
+      
+      {% if doctor.procedures.all %}
+      <div class="mt-4">
+        <h4>Послуги, які надає лікар:</h4>
+        <ul class="list-group mt-2">
+          {% for procedure in doctor.procedures.all %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ procedure.name }}
+            <span class="badge bg-primary rounded-pill">{{ procedure.price }} грн</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <div class="alert alert-warning mt-4">
+        Цей лікар ще не має призначених послуг.
+      </div>
+      {% endif %}
+      
+      {% if doctor.procedures.all %}
+      <div class="mt-4">
+        <label for="serviceSelect" class="form-label"><strong>Оберіть послугу:</strong></label>
+        <select id="serviceSelect" class="form-select">
+          <option value="">-- Виберіть послугу --</option>
+          {% for procedure in doctor.procedures.all %}
+          <option value="{{ procedure.id }}">{{ procedure.name }} ({{ procedure.price }} грн)</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button id="bookButton" class="btn btn-primary mt-4" disabled>Записатися</button>
+      {% else %}
+      <button class="btn btn-primary mt-4" disabled>Записатися</button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<script>
+  const serviceSelect = document.getElementById('serviceSelect');
+  const bookButton = document.getElementById('bookButton');
+  if (serviceSelect && bookButton) {
+    serviceSelect.addEventListener('change', function () {
+      bookButton.disabled = !this.value;
+    });
+  }
+</script>
+{% endblock %}

@@ -681,3 +681,158 @@ python manage.py runserver
 | `/service/3/` | Детальна сторінка "Чищення зубів" |
 | `/service/999/` | Має повернути HTTP 404 |
 | `/admin/shop/service/` | Список послуг з колонкою `image` в адмінці |
+
+---
+
+## Крок 9 — Фільтрація по категоріям
+
+Після реалізації базового функціоналу послуг та їх детальних сторінок, було додано додатковий функціонал для фільтрації лікарів за рейтингом та вибору лікаря на сторінці послуги. Це дозволяє користувачам вибирати лікаря залежно від його рейтингу та процедур, які він проводить.
+
+### Що додано
+
+#### 1. Оновлення моделі `Doctor`
+
+До моделі `Doctor` додано два нових поля:
+
+- **`rating`** — `DecimalField(max_digits=3, decimal_places=1, default=0.0)`: рейтинг лікаря від 0.0 до 5.0
+- **`procedures`** — `ManyToManyField(Service)`: зв'язок з послугами, які проводить лікар
+
+```python
+class Doctor(models.Model):
+    # ... існуючі поля ...
+    rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, verbose_name="Рейтинг")
+    procedures = models.ManyToManyField('Service', blank=True, related_name='doctors', verbose_name="Процедури")
+    # ... існуючі поля ...
+```
+
+Створено міграцію `0005_doctor_procedures_doctor_rating.py` та застосовано її до бази даних.
+
+#### 2. Оновлення view-функцій
+
+- **Оновлено `home`**: додано показ топ 3 лікаря на головній сторінці замість статичного блоку послуг
+- **Оновлено `service_detail`**: додано передачу списку лікарів, які проводять цю послугу (`doctors = Doctor.objects.filter(procedures=service)`)
+- **Додано нову view `doctors`**: відображає список лікарів з фільтрацією за рейтингом через GET-параметр `rating`. Фільтрація працює в діапазоні від цілого числа до наступного (наприклад, `rating=2` показує лікарів з рейтингом 2.0–2.999)
+
+```python
+def doctors(request):
+    rating_filter = request.GET.get('rating')
+    doctors = Doctor.objects.all()
+    if rating_filter:
+        try:
+            rating = int(float(rating_filter))
+            doctors = doctors.filter(rating__gte=rating, rating__lt=rating + 1)
+        except ValueError:
+            pass
+    # ... решта коду ...
+```
+
+#### 3. Оновлення URL-маршрутів
+
+Додано новий маршрут для сторінки лікарів:
+
+```python
+path('doctors/', views.doctors, name='doctors'),
+```
+
+#### 4. Оновлення Django Admin
+
+У `DoctorAdmin` додано `rating` до `list_display` та `list_filter` для відображення та фільтрації за рейтингом у адмінці.
+
+#### 5. Оновлення навігації (`base.html`)
+
+Додано dropdown-меню "Лікарів" у навігації з посиланнями для фільтрації за рейтингом:
+
+- Всі лікарі
+- Рейтинг 5
+- Рейтинг 4
+- Рейтинг 3
+- Рейтинг 2
+- Рейтинг 1
+
+Кожне посилання веде на `/doctors/?rating=X`, де X — ціле число рейтингу.
+
+#### 6. Оновлення шаблону `service_detail.html`
+
+На сторінці детальної послуги додано:
+
+- Випадаючий список (select) для вибору лікаря, якщо є лікарі, які проводять цю послугу
+- Кнопка "Записатися" залишається неактивною, поки не обрано лікаря (JavaScript)
+- Якщо лікарів немає, показується повідомлення
+
+```html
+{% if doctors %}
+<div class="mt-4">
+  <label for="doctorSelect" class="form-label"><strong>Оберіть лікаря:</strong></label>
+  <select id="doctorSelect" class="form-select">
+    <option value="">-- Виберіть лікаря --</option>
+    {% for doctor in doctors %}
+    <option value="{{ doctor.id }}">{{ doctor.name }} ({{ doctor.rating }})</option>
+    {% endfor %}
+  </select>
+</div>
+<button id="bookButton" class="btn btn-primary mt-4" disabled>Записатися</button>
+{% else %}
+<div class="alert alert-warning mt-4">
+  На цю послугу ще не призначено лікарів.
+</div>
+<button class="btn btn-primary mt-4" disabled>Записатися</button>
+{% endif %}
+```
+
+JavaScript активує кнопку при виборі лікаря:
+
+```javascript
+const doctorSelect = document.getElementById('doctorSelect');
+const bookButton = document.getElementById('bookButton');
+if (doctorSelect && bookButton) {
+  doctorSelect.addEventListener('change', function () {
+    bookButton.disabled = !this.value;
+  });
+}
+```
+
+#### 7. Створення шаблону `doctors.html`
+
+Новий шаблон для відображення списку лікарів з:
+
+- Ім'ям, спеціалізацією, рейтингом
+- Текстовим коефіцієнтом ціни залежно від рейтингу:
+  - Рейтинг 3.0: коефіцієнт 1.0 (ціна така сама)
+  - Рейтинг > 3.0: коефіцієнт 1.1 (ціна зростає)
+  - Рейтинг < 3.0: коефіцієнт 0.9 (ціна зменшується)
+- Описом, контактними даними, списком процедур
+
+#### 8. Оновлення стилів (`style.css`)
+
+Додано стилі для `.doctor-card` аналогічно `.service-card`: `border-radius`, `box-shadow`, `transition` для ефекту підняття при наведенні.
+
+#### 9. Створення fixture `doctors.json`
+
+Додано 11 лікарів з різними рейтингами (від 1.9 до 5.0) та прив'язаними процедурами. Завантажено через `python manage.py loaddata shop/fixtures/doctors.json`.
+
+### Команди, які виконувались
+
+```bash
+# Створення міграції для нових полів у Doctor
+python manage.py makemigrations
+python manage.py migrate
+
+# Завантаження fixture з лікарями
+python manage.py loaddata shop/fixtures/doctors.json
+
+# Перевірка
+python manage.py check
+python manage.py runserver
+```
+
+### Що перевіряли після запуску
+
+| URL | Що перевіряли |
+|-----|---------------|
+| `/doctors/` | Список всіх лікарів з коефіцієнтами ціни |
+| `/doctors/?rating=5` | Тільки лікарі з рейтингом 5.0–5.999 |
+| `/doctors/?rating=2` | Тільки лікарі з рейтингом 2.0–2.999 |
+| `/service/1/` | Вибір лікаря для "Лікування карієсу" (якщо є лікарі, які його проводять) |
+| `/admin/shop/doctor/` | Список лікарів з колонкою `rating` та фільтром за рейтингом |
+
+Цей функціонал дозволяє користувачам фільтрувати лікарів за рейтингом через навігацію та вибирати конкретного лікаря на сторінці послуги перед записом.

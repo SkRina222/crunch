@@ -2,11 +2,11 @@ from django.contrib import admin
 from .models import Doctor, Patient, Service, Appointment
 # lab 5: крок 2 - зареєстровано моделі в адмінці: Doctor, Patient, Service, Appointment
 # lab 6: крок 1 - додано поле image до ServiceAdmin для відображення в списку
-# Register your models here.
+# lab 6: крок 9 - додано поля rating та procedures до DoctorAdmin для відображення та фільтрації в адмінці
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'specialization', 'phone', 'email', 'created_at', 'updated_at')
+    list_display = ('id', 'name', 'specialization', 'photo', 'phone', 'email', 'created_at', 'updated_at')
     search_fields = ('name', 'specialization', 'email', 'phone')
     list_filter = ('specialization', 'created_at', 'updated_at')
 

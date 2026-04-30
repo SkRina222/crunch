@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Стоматологічна клініка "Посмішка"</h1>
         <p>Професійна стоматологічна допомога з турботою про вашу посмішку. Сучасне обладнання, досвідчені лікарі та індивідуальний підхід до кожного пацієнта.</p>
-        <a href="{% url 'shop:products' %}" class="btn btn-primary btn-primary-custom">Записатися на прийом</a>
+        <a href="{% url 'shop:doctors' %}" class="btn btn-primary btn-primary-custom">Записатися на прийом</a>
     </div>
 </section>
 
@@ -29,47 +29,36 @@
     </div>
 </section>
 
-<!-- Services Section -->
+<!-- Top Doctors Section -->
 <section class="services-section">
     <div class="container">
-        <h2>Наші послуги</h2>
+        <!-- lab 6: крок 9 - замінено секцію послуг на секцію топ 3 лікаря на головній сторінці -->
+        <h2>Топ 3 лікаря</h2>
         <div class="row">
+            {% for doctor in doctors %}
             <div class="col-md-4 mb-4">
                 <div class="service-card">
-                    <h3>Лікування карієсу</h3>
-                    <p class="description">Професійне лікування карієсу з використанням сучасних пломбувальних матеріалів. Гарантуємо довговічність та естетичний вигляд.</p>
+                    {% if doctor.photo %}
+                    <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor-photo img-fluid mb-3">
+                    {% else %}
+                    <div class="doctor-photo-placeholder mb-3">
+                        <span>Немає фото</span>
+                    </div>
+                    {% endif %}
+                    <h3>{{ doctor.name }}</h3>
+                    <p class="specialization">{{ doctor.specialization }}</p>
+                    {% if doctor.description %}
+                    <p class="description">{{ doctor.description|truncatechars:140 }}</p>
+                    {% endif %}
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
+            {% empty %}
+            <div class="col-12">
                 <div class="service-card">
-                    <h3>Протезування зубів</h3>
-                    <p class="description">Виготовлення та встановлення зубних протезів різних типів: від мостів до імплантів. Відновимо вашу посмішку повністю.</p>
+                    <p class="description">Поки що немає доступних лікарів для відображення.</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <h3>Чищення зубів</h3>
-                    <p class="description">Професійне чищення зубів від нальоту та каменю. Ультразвукова чистка та полірування для здоров'я та красивої посмішки.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <h3>Виправлення прикусу</h3>
-                    <p class="description">Ортодонтичне лікування для корекції прикусу. Брекети, елайнери та інші сучасні методи для ідеальної посмішки.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <h3>Імплантація зубів</h3>
-                    <p class="description">Встановлення зубних імплантів для заміни втрачених зубів. Найсучасніші матеріали та техніки для тривалого результату.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <h3>Дитяча стоматологія</h3>
-                    <p class="description">Спеціалізована допомога для дітей. Безболісне лікування, профілактика та навчання правильного догляду за зубами.</p>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>
