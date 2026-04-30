@@ -10,7 +10,7 @@
       {% if doctor.photo %}
       <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="img-fluid service-image">
       {% else %}
-      <div class="doctor-photo-placeholder" style="width: 100%; height: 400px; background: #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6c757d; font-size: 1.1rem;">
+      <div class="doctor-photo-placeholder">
         <span>Немає фото</span>
       </div>
       {% endif %}
